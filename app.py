@@ -1,4 +1,5 @@
 import os
+import asyncio
 import threading
 from flask import Flask
 from pyrogram import Client, filters
@@ -20,7 +21,7 @@ mlbb_prices = [30, 50, 150]
 fortnite_items = ["300 v-bucks", "800 v-bucks", "1200 v-bucks"]
 fortnite_prices = [250, 400, 550]
 
-# --- FLASK ---
+# --- FLASK (чтобы Render видел порт) ---
 app = Flask(__name__)
 
 @app.route('/')
@@ -63,14 +64,12 @@ async def callback(client, query):
         await query.message.edit_text(show_items(fortnite_items, fortnite_prices))
     await query.answer()
 
-import asyncio
-
 def run_bot():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     bot_app.run()
 
-
+# --- ЗАПУСК ---
 if __name__ == "__main__":
     threading.Thread(target=run_bot).start()
     port = int(os.environ.get("PORT", 10000))
