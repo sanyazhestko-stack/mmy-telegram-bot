@@ -63,8 +63,13 @@ async def callback(client, query):
         await query.message.edit_text(show_items(fortnite_items, fortnite_prices))
     await query.answer()
 
+import asyncio
+
 def run_bot():
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     bot_app.run()
+
 
 if __name__ == "__main__":
     threading.Thread(target=run_bot).start()
